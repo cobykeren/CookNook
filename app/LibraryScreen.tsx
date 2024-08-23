@@ -1,70 +1,65 @@
-import React from "react";
-import { SafeAreaView, View, FlatList, StyleSheet } from "react-native";
-import { Appbar, FAB, Card, Title } from "react-native-paper";
-
-const recipes = [
-  { id: "1", title: "Spaghetti Bolognese" },
-  { id: "2", title: "Chicken Curry" },
-  { id: "3", title: "Vegetable Stir Fry" },
-  { id: "4", title: "Spaghetti Bolognese" },
-  { id: "5", title: "Chicken Curry" },
-  { id: "6", title: "Vegetable Stir Fry" },
-  { id: "7", title: "Spaghetti Bolognese" },
-  { id: "8", title: "Chicken Curry" },
-  { id: "9", title: "Vegetable Stir Fry" },
-  { id: "10", title: "Spaghetti Bolognese" },
-  { id: "11", title: "Chicken Curry" },
-  { id: "12", title: "Vegetable Stir Fry" },
-  { id: "13", title: "Spaghetti Bolognese" },
-  { id: "14", title: "Chicken Curry" },
-];
+// app/index.tsx
+import React, { useState } from "react";
+import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { FAB, Card, Title } from "react-native-paper";
+import { useRouter } from "expo-router";
+import { useRecipes } from "./context/RecipesContext";
+import { AirbnbRating } from "react-native-ratings";
 
 const LibraryScreen: React.FC = () => {
-  const renderItem = React.useCallback(
-    ({ item }: { item: { id: string; title: string } }) => (
+  const { recipes } = useRecipes();
+  const router = useRouter();
+  // const [rating, setRating] = useState(recipe?.rating || 0);
+
+  const renderItem = ({
+    item,
+  }: {
+    item: { id: string; title: string; rating: number };
+  }) => (
+    <TouchableOpacity onPress={() => router.push(`/recipe/${item.id}`)}>
       <Card style={styles.card}>
         <Card.Content>
           <Title>{item.title}</Title>
+          <AirbnbRating
+            showRating={false}
+            count={5}
+            defaultRating={item.rating}
+            isDisabled={true}
+            size={20}
+            starContainerStyle={styles.rating}
+          />
         </Card.Content>
       </Card>
-    ),
-    []
+    </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <FlatList
-          data={recipes}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.listContainer}
-          scrollEventThrottle={16} // Optional: helps smooth out scroll events
-        />
+    <View style={styles.container}>
+      <FlatList
+        data={recipes}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContainer}
+      />
 
-        <FAB
-          style={styles.fab}
-          icon="plus"
-          label="New RECIPE"
-          onPress={() => console.log("Add new recipe")}
-        />
-      </View>
-    </SafeAreaView>
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        label="New Recipe"
+        onPress={() => router.push("/recipe/new")}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#fff", // Ensure the SafeAreaView has a background color
-  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
   },
   listContainer: {
     paddingHorizontal: 16,
-    flexGrow: 1, // Ensure the list grows to fill available space
+    flexGrow: 1,
   },
   card: {
     marginBottom: 16,
@@ -76,6 +71,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignSelf: "center",
+  },
+  rating: {
+    paddingVertical: 10,
   },
 });
 
