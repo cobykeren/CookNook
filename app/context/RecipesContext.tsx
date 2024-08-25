@@ -6,6 +6,7 @@ type Recipe = {
   title: string;
   body: string;
   rating: number;
+  dateCreated: string;
 };
 
 type RecipesContextType = {
@@ -24,14 +25,15 @@ export const RecipesProvider: React.FC<{ children: React.ReactNode }> = ({
       title: "Spaghetti Bolognese",
       body: "Boil pasta, cook meat...",
       rating: 4,
+      dateCreated: "8/01/2024",
     },
     {
       id: "2",
       title: "Chicken Curry",
       body: "Cook chicken, add spices...",
       rating: 5,
+      dateCreated: "8/01/2024",
     },
-    // Add more initial recipes if needed
   ]);
 
   return (

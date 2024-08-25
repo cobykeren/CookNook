@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Alert, ScrollView } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { Appbar, Button, Title } from "react-native-paper";
 import { useRecipes } from "../context/RecipesContext";
@@ -19,15 +26,21 @@ const NewRecipeScreen: React.FC = () => {
       return;
     }
 
+    const timestamp = Date.now();
     const newRecipe = {
       id: (recipes.length + 1).toString(), // Generate a new ID
       title,
       body,
       rating,
+      dateCreated: new Date(timestamp).toLocaleDateString(),
     };
 
     setRecipes([...recipes, newRecipe]);
     router.back();
+  };
+
+  const handleDone = () => {
+    Keyboard.dismiss();
   };
 
   return (
@@ -37,12 +50,16 @@ const NewRecipeScreen: React.FC = () => {
         <TextInput
           style={styles.input}
           placeholder="Recipe Title"
+          placeholderTextColor="#C0C0C0"
           value={title}
           onChangeText={setTitle}
+          returnKeyType="done"
+          onSubmitEditing={handleDone}
         />
         <TextInput
           style={[styles.input, styles.bodyInput]}
-          placeholder="Recipe Body"
+          placeholder="Recipe Instructions"
+          placeholderTextColor="#C0C0C0"
           value={body}
           onChangeText={setBody}
           multiline
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   bodyInput: {
-    height: 100,
+    height: 200,
     textAlignVertical: "top",
   },
   ratingLabel: {

@@ -1,7 +1,7 @@
 // app/index.tsx
 import React, { useState } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { FAB, Card, Title } from "react-native-paper";
+import { FAB, Card, Title, Paragraph } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useRecipes } from "./context/RecipesContext";
 import { AirbnbRating } from "react-native-ratings";
@@ -14,12 +14,15 @@ const LibraryScreen: React.FC = () => {
   const renderItem = ({
     item,
   }: {
-    item: { id: string; title: string; rating: number };
+    item: { id: string; title: string; rating: number; dateCreated: string };
   }) => (
     <TouchableOpacity onPress={() => router.push(`/recipe/${item.id}`)}>
       <Card style={styles.card}>
         <Card.Content>
-          <Title>{item.title}</Title>
+          <View style={styles.titleRow}>
+            <Title style={styles.title}>{item.title}</Title>
+            <Paragraph style={styles.date}>{item.dateCreated}</Paragraph>
+          </View>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -44,8 +47,7 @@ const LibraryScreen: React.FC = () => {
 
       <FAB
         style={styles.fab}
-        icon="plus"
-        label="New Recipe"
+        label="New Recipe 🍳"
         onPress={() => router.push("/recipe/new")}
       />
     </View>
@@ -62,7 +64,20 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   card: {
-    marginBottom: 16,
+    marginBottom: 10,
+  },
+  titleRow: {
+    flexDirection: "row", // Layout children in a row
+    justifyContent: "space-between", // Spread out the title and date
+    alignItems: "center", // Center them vertically
+    marginBottom: 8,
+  },
+  title: {
+    textAlign: "left",
+  },
+  date: {
+    textAlign: "right", // Right-align the date text
+    color: "#666", // Use a lighter color for the date
   },
   fab: {
     width: 180,
@@ -73,7 +88,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   rating: {
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
 });
 
