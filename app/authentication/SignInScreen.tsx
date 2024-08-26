@@ -21,7 +21,7 @@ const SignInScreen: React.FC = () => {
   const handleSignIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.replace("/LibraryScreen"); // Redirect to home (LibraryScreen) after sign-in
+      router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert("Sign In Error", error.message);

@@ -27,7 +27,7 @@ const SignUpScreen: React.FC = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.replace("/"); // Redirect to home (LibraryScreen) after sign-up
+      router.replace("/");
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert("Sign In Error", error.message);

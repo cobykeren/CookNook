@@ -26,7 +26,8 @@ export default function RootLayout() {
             text: "Logout",
             onPress: async () => {
               await signOut(auth);
-              router.replace("/authentication/SignInScreen");
+              console.log("User logged out");
+              router.replace("/");
             },
             style: "default",
           },
@@ -38,18 +39,6 @@ export default function RootLayout() {
     }
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       router.replace("/LibraryScreen"); // Redirect LibraryScreen if authenticated
-  //     } else {
-  //       router.replace("/authentication/SignInScreen"); // Redirect SignInScreen if not authenticated
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, [router]);
-
   return (
     <PaperProvider theme={customTheme}>
       <SafeAreaView style={styles.safeArea}>
@@ -60,6 +49,7 @@ export default function RootLayout() {
                 name="index"
                 options={{
                   title: "CookNook 🍽️",
+                  animation: "slide_from_left",
                 }}
               />
               <Stack.Screen
@@ -83,7 +73,7 @@ export default function RootLayout() {
               />
               <Stack.Screen
                 name="recipe/[id]"
-                options={{ title: "Edit Recipe" }}
+                options={{ title: "My Recipe" }}
               />
               <Stack.Screen
                 name="recipe/NewRecipe"

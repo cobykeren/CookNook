@@ -1,14 +1,54 @@
-// app/index.tsx
+// app/LibraryScreen.tsx
 import React, { useState } from "react";
-import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { FAB, Card, Title, Paragraph } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useRecipes } from "./context/RecipesContext";
 import { AirbnbRating } from "react-native-ratings";
+import { useFetchAllRecipes } from "./dataFetch/FetchRecipes";
 
 const LibraryScreen: React.FC = () => {
-  const { recipes } = useRecipes();
+  // const { recipes } = useRecipes();
+  const { recipes, loading } = useFetchAllRecipes();
   const router = useRouter();
+
+  // const renderItem = ({
+  //   item,
+  // }: {
+  //   item: { id: string; title: string; rating: number; dateCreated: string };
+  // }) => (
+  //   <TouchableOpacity onPress={() => router.push(`/recipe/${item.id}`)}>
+  //     <Card style={styles.card}>
+  //       <Card.Content>
+  //         <View style={styles.titleRow}>
+  //           <Title style={styles.title}>{item.title}</Title>
+  //           <Paragraph style={styles.date}>{item.dateCreated}</Paragraph>
+  //         </View>
+  //         <AirbnbRating
+  //           showRating={false}
+  //           count={5}
+  //           defaultRating={item.rating}
+  //           isDisabled={true}
+  //           size={20}
+  //           starContainerStyle={styles.rating}
+  //         />
+  //       </Card.Content>
+  //     </Card>
+  //   </TouchableOpacity>
+  // );
+
+  const transformedRecipes = recipes.map((recipe) => ({
+    ...recipe,
+    dateCreated: recipe.dateCreated
+      ? recipe.dateCreated.toDate().toLocaleDateString()
+      : "Loading...",
+  }));
 
   const renderItem = ({
     item,
@@ -35,10 +75,18 @@ const LibraryScreen: React.FC = () => {
     </TouchableOpacity>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#787878" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={recipes}
+        data={transformedRecipes}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
@@ -88,6 +136,11 @@ const styles = StyleSheet.create({
   },
   rating: {
     paddingVertical: 5,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

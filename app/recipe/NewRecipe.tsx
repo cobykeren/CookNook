@@ -8,9 +8,11 @@ import {
   Keyboard,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Appbar, Button, Title } from "react-native-paper";
+import { Button, Title } from "react-native-paper";
 import { useRecipes } from "../context/RecipesContext";
 import { AirbnbRating } from "react-native-ratings";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
 
 const NewRecipeScreen: React.FC = () => {
   const router = useRouter();
@@ -20,22 +22,27 @@ const NewRecipeScreen: React.FC = () => {
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(0);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!title || !body || rating === 0) {
       Alert.alert("Error", "Please fill out all fields and provide a rating.");
       return;
     }
 
-    const timestamp = Date.now();
-    const newRecipe = {
-      id: (recipes.length + 1).toString(), // Generate a new ID
-      title,
-      body,
-      rating,
-      dateCreated: new Date(timestamp).toLocaleDateString(),
-    };
+    const user = auth.currentUser;
+    if (user) {
+      const recipesCollectionRef = collection(db, "users", user.uid, "recipes");
 
-    setRecipes([...recipes, newRecipe]);
+      await addDoc(recipesCollectionRef, {
+        title,
+        body,
+        rating,
+        dateCreated: serverTimestamp(),
+      });
+
+      console.log("Recipe added to Firestore");
+    }
+
+    // setRecipes([...recipes, newRecipe]);
     router.back();
   };
 
