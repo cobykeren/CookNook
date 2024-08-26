@@ -9,7 +9,6 @@ import { AirbnbRating } from "react-native-ratings";
 const LibraryScreen: React.FC = () => {
   const { recipes } = useRecipes();
   const router = useRouter();
-  // const [rating, setRating] = useState(recipe?.rating || 0);
 
   const renderItem = ({
     item,
@@ -48,7 +47,7 @@ const LibraryScreen: React.FC = () => {
       <FAB
         style={styles.fab}
         label="New Recipe 🍳"
-        onPress={() => router.push("/recipe/new")}
+        onPress={() => router.push("/recipe/NewRecipe")}
       />
     </View>
   );
