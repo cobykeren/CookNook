@@ -20,12 +20,7 @@ import { db, auth } from "../firebaseConfig";
 const RecipeScreen: React.FC = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-  // const { recipes, setRecipes } = useRecipes();
-  // const recipe = recipes.find((r) => r.id === id);
 
-  // const [title, setTitle] = useState(recipe?.title || "");
-  // const [body, setBody] = useState(recipe?.body || "");
-  // const [rating, setRating] = useState(recipe?.rating || 0);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(0);
@@ -58,38 +53,6 @@ const RecipeScreen: React.FC = () => {
 
     fetchRecipe();
   }, [id]);
-
-  // const handleSave = () => {
-  //   const updatedRecipes = recipes.map((r) =>
-  //     r.id === id ? { ...r, title, body, rating } : r
-  //   );
-  //   setRecipes(updatedRecipes);
-  //   router.back();
-  // };
-
-  // const handleDelete = () => {
-  //   Alert.alert(
-  //     "Delete Recipe",
-  //     "Are you sure you want to delete this recipe?",
-  //     [
-  //       {
-  //         text: "Cancel",
-  //         onPress: () => console.log("Deletion cancelled"),
-  //         style: "cancel",
-  //       },
-  //       {
-  //         text: "Delete",
-  //         onPress: () => {
-  //           const updatedRecipes = recipes.filter((r) => r.id !== id);
-  //           setRecipes(updatedRecipes);
-  //           router.back();
-  //         },
-  //         style: "destructive",
-  //       },
-  //     ],
-  //     { cancelable: true }
-  //   );
-  // };
 
   const handleSave = async () => {
     try {

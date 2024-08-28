@@ -6,6 +6,7 @@ import {
   Alert,
   ScrollView,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Button, Title } from "react-native-paper";
@@ -13,14 +14,15 @@ import { useRecipes } from "../context/RecipesContext";
 import { AirbnbRating } from "react-native-ratings";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
+import { generateRecipe } from "../api/api";
 
 const NewRecipeScreen: React.FC = () => {
   const router = useRouter();
-  const { recipes, setRecipes } = useRecipes();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
     if (!title || !body || rating === 0) {
@@ -42,12 +44,23 @@ const NewRecipeScreen: React.FC = () => {
       console.log("Recipe added to Firestore");
     }
 
-    // setRecipes([...recipes, newRecipe]);
     router.back();
   };
 
   const handleDone = () => {
     Keyboard.dismiss();
+  };
+
+  const handleGenerateRecipe = async () => {
+    setLoading(true);
+    try {
+      const ingredientsArray = body;
+      const generatedRecipe = await generateRecipe(ingredientsArray);
+      setBody(generatedRecipe);
+    } catch (error) {
+      alert("Failed to generate recipe. Please try again.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -63,14 +76,41 @@ const NewRecipeScreen: React.FC = () => {
           returnKeyType="done"
           onSubmitEditing={handleDone}
         />
-        <TextInput
+        {/* <TextInput
           style={[styles.input, styles.bodyInput]}
-          placeholder="Recipe Instructions"
+          placeholder="Ingredients for AI Recipe..."
           placeholderTextColor="#C0C0C0"
-          value={body}
+          value={loading ? "AI Recipe Loading..." : body}
           onChangeText={setBody}
           multiline
-        />
+          editable={!loading}
+        /> */}
+        <View style={{ position: "relative" }}>
+          <TextInput
+            style={[styles.input, styles.bodyInput]}
+            placeholder="Ingredients for AI Recipe..."
+            placeholderTextColor="#C0C0C0"
+            value={loading ? "" : body} // Clear text when loading
+            onChangeText={setBody}
+            multiline
+            editable={!loading} // Disable input when loading
+          />
+          {loading && (
+            <ActivityIndicator
+              style={styles.loading}
+              size="small"
+              color="#787878"
+            />
+          )}
+        </View>
+        <Button
+          mode="contained"
+          onPress={handleGenerateRecipe}
+          style={styles.aiButton}
+          buttonColor="#D1C4E9"
+        >
+          Generate Recipe with AI
+        </Button>
         <Title style={styles.ratingLabel}>Rating:</Title>
         <AirbnbRating
           showRating={false}
@@ -123,6 +163,16 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     marginTop: 20,
+  },
+  aiButton: {
+    marginBottom: 10,
+    width: 210,
+    alignSelf: "center",
+  },
+  loading: {
+    position: "absolute",
+    alignSelf: "center",
+    top: "40%", // Adjust to center the spinner vertically
   },
 });
 
