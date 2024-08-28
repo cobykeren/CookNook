@@ -9,39 +9,12 @@ import {
 } from "react-native";
 import { FAB, Card, Title, Paragraph } from "react-native-paper";
 import { useRouter } from "expo-router";
-import { useRecipes } from "./context/RecipesContext";
 import { AirbnbRating } from "react-native-ratings";
 import { useFetchAllRecipes } from "./dataFetch/FetchRecipes";
 
 const LibraryScreen: React.FC = () => {
-  // const { recipes } = useRecipes();
   const { recipes, loading } = useFetchAllRecipes();
   const router = useRouter();
-
-  // const renderItem = ({
-  //   item,
-  // }: {
-  //   item: { id: string; title: string; rating: number; dateCreated: string };
-  // }) => (
-  //   <TouchableOpacity onPress={() => router.push(`/recipe/${item.id}`)}>
-  //     <Card style={styles.card}>
-  //       <Card.Content>
-  //         <View style={styles.titleRow}>
-  //           <Title style={styles.title}>{item.title}</Title>
-  //           <Paragraph style={styles.date}>{item.dateCreated}</Paragraph>
-  //         </View>
-  //         <AirbnbRating
-  //           showRating={false}
-  //           count={5}
-  //           defaultRating={item.rating}
-  //           isDisabled={true}
-  //           size={20}
-  //           starContainerStyle={styles.rating}
-  //         />
-  //       </Card.Content>
-  //     </Card>
-  //   </TouchableOpacity>
-  // );
 
   const transformedRecipes = recipes.map((recipe) => ({
     ...recipe,

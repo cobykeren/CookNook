@@ -19,7 +19,6 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("useEffect triggered");
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       console.log("Auth state changed:");
       if (user) {
@@ -34,7 +33,7 @@ export default function Index() {
               email: user.email,
               createdAt: new Date(),
             });
-
+            // Create initial recipe collection
             console.log("New user document created in Firestore:", user.uid);
             const recipesCollectionRef = collection(
               db,
@@ -51,15 +50,13 @@ export default function Index() {
             });
 
             console.log("Starter Recipe added to Firestore");
-
-            // Initialize an empty recipes subcollection
           } else {
             console.log("User already exists in Firestore:", user.uid);
           }
         } catch (error) {
           console.error("Error adding user to Firestore:", error);
         }
-        router.replace("/LibraryScreen"); // Redirect LibraryScreen if authenticated
+        router.replace("/LibraryScreen");
       }
     });
 
