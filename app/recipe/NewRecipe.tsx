@@ -76,15 +76,6 @@ const NewRecipeScreen: React.FC = () => {
           returnKeyType="done"
           onSubmitEditing={handleDone}
         />
-        {/* <TextInput
-          style={[styles.input, styles.bodyInput]}
-          placeholder="Ingredients for AI Recipe..."
-          placeholderTextColor="#C0C0C0"
-          value={loading ? "AI Recipe Loading..." : body}
-          onChangeText={setBody}
-          multiline
-          editable={!loading}
-        /> */}
         <View style={{ position: "relative" }}>
           <TextInput
             style={[styles.input, styles.bodyInput]}
@@ -107,7 +98,7 @@ const NewRecipeScreen: React.FC = () => {
           mode="contained"
           onPress={handleGenerateRecipe}
           style={styles.aiButton}
-          buttonColor="#D1C4E9"
+          buttonColor="#9575CD"
         >
           Generate Recipe with AI
         </Button>
