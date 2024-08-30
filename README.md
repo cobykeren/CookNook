@@ -1,50 +1,44 @@
-# Welcome to your Expo app 👋
+# CookNook 🍽️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**CookNook** is a cross-platform mobile application that allows users to create a catalog of their personal recipes, as well as generate recipes based on the ingredients they have. Powered by OpenAI, the app allows users to create new recipes, generate recipes based on input ingredients, save, edit, rate, and view their collection of recipes. The app also supports user authentication and cloud storage through Firebase.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **AI-Powered Recipe Generation**: Generate unique recipes based on the ingredients you have.
+- **User Authentication**: Secure user authentication using Firebase Authentication.
+- **Personal Recipe Library**: Save, edit, and manage your own collection of recipes.
+- **Real-Time Data Sync**: All data is synced in real-time across devices using Firebase Firestore.
+- **Cross-Platform**: Works on both Android and iOS devices.
+- **Modern UI**: A clean, intuitive interface built with React Native and React Native Paper.
 
-   ```bash
-   npm install
-   ```
+## Technologies Used
 
-2. Start the app
+- **Frontend**:
+  - React Native
+  - Expo
+  - TypeScript
+  - React Native Paper
 
-   ```bash
-    npx expo start
-   ```
+- **Backend**:
+  - Node.js
+  - Firebase Cloud Functions
+  - Firebase Firestore
+  - Firebase Authentication
+  - OpenAI API
 
-In the output, you'll find options to open the app in a
+- **Build and Deployment**:
+  - EAS (Expo Application Services)
+  - Firebase Hosting (for serverless backend functions)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Using the App with Expo Go
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+You can easily try out **CookNook** on your own device using the Expo Go app. Here’s how:
 
-## Get a fresh project
+1. **Install Expo Go**:
+   - Download and install the [Expo Go app](https://expo.dev/client) from the App Store (iOS) or Google Play (Android).
 
-When you're ready, run:
+2. **Open the App via Link**:
+   - Click on the following link to open **CookNook** in Expo Go:
+     - [Open CookNook in Expo Go](https://expo.dev/preview/update?message=small%20edits&updateRuntimeVersion=1.0.0&createdAt=2024-08-29T16%3A26%3A54.856Z&slug=exp&projectId=7140d63d-22a2-4474-8287-e622b61f8c65&group=cc557127-c15f-4c64-ae60-ca5f6194c468)
+   - The link will open in your web browser and prompt you to open the Expo Go app.
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
