@@ -9,15 +9,14 @@ const customTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#6200ee", // Primary color (adjust as needed)
-    accent: "#03dac4", // Accent color (adjust as needed)
-    background: "#f6f6f6", // Background color
-    surface: "#ffffff", // Surface color (cards, sheets, etc.)
-    text: "#000000", // Primary text color
-    onBackground: "#000000", // Text color on background
-    onSurface: "#000000", // Text color on surface
-    // Additional colors to override if needed
-    // platform-specific overrides:
+    primary: "#6200ee",
+    accent: "#03dac4",
+    background: "#f6f6f6",
+    surface: "#ffffff",
+    text: "#000000",
+    onBackground: "#000000",
+    onSurface: "#000000",
+
     ...Platform.select({
       ios: {
         primary: "#007AFF", // iOS blue
@@ -26,13 +25,13 @@ const customTheme = {
         primary: "#6200ee", // Android purple
       },
       web: {
-        primary: "#6200ee", // Web purple (same as Android here)
+        primary: "#6200ee",
       },
     }),
   },
-  roundness: 4, // Adjust for iOS-like roundness
+  roundness: 4,
   animation: {
-    scale: 1.0, // Default animation scale
+    scale: 1.0,
   },
 };
 
